@@ -1,0 +1,4 @@
+# Project settings
+.env
+# IDEs and editors
+**/.idea/
