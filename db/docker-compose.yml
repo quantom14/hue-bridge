@@ -15,6 +15,13 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - default
+      - monitoring
+
+networks:
+  monitoring:
+    external: true
 
 volumes:
   pgdata:
