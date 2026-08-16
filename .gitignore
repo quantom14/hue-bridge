@@ -1,5 +1,17 @@
 # Project settings
 .env
+
+# Backup output and logs
+backup/backups/
+backup/backup.log*
+
+# Local python
+**/__pycache__/
+**/*.pyc
+**/.venv/
+
+# local postgres data
+pgdata/
+
 # IDEs and editors
 **/.idea/
-**/.venv/

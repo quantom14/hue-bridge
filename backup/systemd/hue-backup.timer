@@ -1,0 +1,11 @@
+[Unit]
+Description=Run Hue Bridge backup daily
+Requires=hue-backup.service
+
+[Timer]
+OnCalendar=*-*-* 02:30:00
+Persistent=true
+RandomizedDelaySec=300
+
+[Install]
+WantedBy=timers.target

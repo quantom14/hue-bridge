@@ -1,0 +1,13 @@
+[Unit]
+Description=Hue Bridge Backup
+Wants=hue-backup.timer
+
+[Service]
+Type=oneshot
+User=saruman
+ExecStart=/home/saruman/projects/hue-bridge/backup/backup.sh
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
