@@ -1,7 +1,7 @@
 [Unit]
-Description=Poll Philips Hue bridge into Postgres
+Description=Hue Bridge Polling
+Wants=hue-polling.timer
 After=network-online.target docker.service
-Wants=network-online.target
 
 [Service]
 Type=oneshot
@@ -9,17 +9,10 @@ User=saruman
 WorkingDirectory=/home/saruman/projects/hue-bridge/polling
 EnvironmentFile=/home/saruman/projects/hue-bridge/.env
 ExecStart=/home/saruman/projects/hue-bridge/polling/.venv/bin/python poller.py
-
+Environment=PYTHONDONTWRITEBYTECODE=1
 StandardOutput=journal
 StandardError=journal
 SyslogIdentifier=hue-polling
 
-# The repo lives under /home, so ProtectHome must not be 'true' or the unit
-# cannot see its own code. read-only still blocks writes to the home dir.
-ProtectHome=read-only
-# ...which means Python must not try to write __pycache__ next to the source.
-Environment=PYTHONDONTWRITEBYTECODE=1
-
-NoNewPrivileges=true
-PrivateTmp=true
-ProtectSystem=strict
+[Install]
+WantedBy=multi-user.target

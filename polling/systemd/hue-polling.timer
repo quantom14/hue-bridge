@@ -1,12 +1,11 @@
 [Unit]
-Description=Run the Hue poller every 5 minutes
+Description=Run Hue Bridge polling every 5 minutes
+Requires=hue-polling.service
 
 [Timer]
 OnBootSec=2min
 OnUnitActiveSec=5min
-# Without this, a Pi that was asleep or off never catches up.
 Persistent=true
-Unit=hue-polling.service
 
 [Install]
 WantedBy=timers.target
