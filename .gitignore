@@ -2,3 +2,4 @@
 .env
 # IDEs and editors
 **/.idea/
+**/.venv/
