@@ -32,10 +32,13 @@ log = logging.getLogger("hue-poller")
 
 BRIDGE_IP = os.environ["HUE_BRIDGE_IP"]
 HUE_USERNAME = os.environ["HUE_USERNAME"]
-# Empty string is valid: libpq then falls back to PGHOST/PGPORT/PGDATABASE/
-# PGUSER/PGPASSWORD from the environment, which avoids putting a
-# space-containing DSN in a file shared with docker compose.
-PG_DSN = os.environ.get("PG_DSN", "")
+PG_CONN = dict(
+    host=os.environ["HUE_PGHOST"],
+    port=os.environ["HUE_PGPORT"],
+    dbname=os.environ["HUE_PGDATABASE"],
+    user=os.environ["HUE_PGUSER"],
+    password=os.environ["HUE_PGPASSWORD"],
+)
 TIMEOUT = float(os.environ.get("HUE_TIMEOUT", "10"))
 
 BASE = f"http://{BRIDGE_IP}/api/{HUE_USERNAME}"
@@ -310,7 +313,7 @@ def main() -> int:
 
     devices = build_devices(lights, sensors, groups)
 
-    conn = psycopg2.connect(PG_DSN)
+    conn = psycopg2.connect(**PG_CONN)
     try:
         with conn, conn.cursor() as cur:
             pk_by_resource = upsert_devices(cur, devices)
